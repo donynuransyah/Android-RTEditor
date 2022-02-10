@@ -28,7 +28,6 @@ import android.text.style.SuperscriptSpan;
 import android.text.style.URLSpan;
 import android.util.Log;
 
-import com.onegravity.rteditor.Logma;
 import com.onegravity.rteditor.spans.UnderlineSpan;
 
 import com.onegravity.rteditor.api.format.RTFormat;
@@ -73,10 +72,6 @@ public class ConverterSpannedToHtml {
     private static final String GT = "&gt;";
     private static final String AMP = "&amp;";
     private static final String NBSP = "&nbsp;";
-    private RemoveFormatting removeFormatting;
-    public void setCallback(RemoveFormatting removeFormatting){
-        this.removeFormatting = removeFormatting;
-    }
     private StringBuilder mOut;
     private Spanned mText;
     private RTFormat mRTFormat;
@@ -138,14 +133,12 @@ public class ConverterSpannedToHtml {
             // process leading margin style
             processLeadingMarginStyle(new AccumulatedParagraphStyle(newType, newIndent, 0));
             // add start list tag
-            Logma.debugger("aduh convertParagraphs 1 : " + newType.getListStartTag());
             mOut.append(newType.getListStartTag());
 
             /*
              * start tag: alignment (left, center, right)
              */
             if (alignmentType != null) {
-                Logma.debugger("aduh convertParagraphs 2 : " + alignmentType.getStartTag());
                 mOut.append(alignmentType.getStartTag());
             }
 
@@ -159,14 +152,12 @@ public class ConverterSpannedToHtml {
              */
             if (alignmentType != null) {
                 removeTrailingLineBreak(alignmentType);
-                Logma.debugger("aduh convertParagraphs 3 : " + alignmentType.getEndTag());
                 mOut.append(alignmentType.getEndTag());
             }
 
 
             // add end list tag
             removeTrailingLineBreak(newType);
-            Logma.debugger("aduh convertParagraphs 4 : " + newType.getListEndTag());
             mOut.append(newType.getListEndTag());
         }
 
@@ -185,13 +176,6 @@ public class ConverterSpannedToHtml {
             CharSequence subSequence = mOut.subSequence(start, end);
             if (subSequence.equals(BR)) {
                 mOut.delete(start, end);
-            }
-            //fix bug numbering
-            if (subSequence.equals(NEWLINENUMBER)) {
-//                removeParagraph();
-//                removeTrailingLineBreak(ParagraphType.NUMBERING);
-                removeFormatting.remove(ParagraphType.NUMBERING);
-                Logma.debugger("bambang new line but empty");
             }
         }
     }
@@ -236,9 +220,7 @@ public class ConverterSpannedToHtml {
             String tag = style.getType().getEndTag();
             int indent = style.getRelativeIndent();
             for (int i = 0; i < indent; i++) {
-                Logma.debugger("aduh removeParagraph : " + tag);
                 mOut.append(tag);
-                Logma.debugger("========================= " + mOut+" =======================");
             }
             if (mOut.indexOf("<br/>") != -1) {
             }
@@ -252,7 +234,6 @@ public class ConverterSpannedToHtml {
         int indent = style.getRelativeIndent();
         for (int i = 0; i < indent; i++) {
             mOut.append(tag);
-            Logma.debugger("aduh addParagraph " + indent + ":" + tag);
         }
         mParagraphStyles.push(style);
     }
@@ -292,9 +273,6 @@ public class ConverterSpannedToHtml {
             CharacterStyle span = spans.isEmpty() ? null : spans.first();
             int spanStart = span == null ? Integer.MAX_VALUE : text.getSpanStart(span);
             int spanEnd = span == null ? Integer.MAX_VALUE : text.getSpanEnd(span);
-            Logma.debugger("convert Text "+String.valueOf(span));
-            Logma.debugger("convert Text "+spanStart);
-            Logma.debugger("convert Text "+spanEnd);
             if (start < spanStart) {
 
                 // no paragraph, just plain text
@@ -424,9 +402,7 @@ public class ConverterSpannedToHtml {
      */
     private void escape(CharSequence text, int start, int end) {
         for (int i = start; i < end; i++) {
-            Logma.debugger("out escape 1 :" + mOut.toString());
             char c = text.charAt(i);
-            Logma.debugger("out escape 1 :" + c +":"+end);
             if (c == '\n') {
                 mOut.append(BR);
             } else if (c == '<') {
@@ -449,7 +425,6 @@ public class ConverterSpannedToHtml {
                 mOut.append(c);
             }
         }
-        Logma.debugger("out escape 2:" + mOut.toString());
     }
 
 }

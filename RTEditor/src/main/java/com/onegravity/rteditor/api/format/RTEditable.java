@@ -19,7 +19,6 @@ package com.onegravity.rteditor.api.format;
 import android.text.Editable;
 import android.view.inputmethod.BaseInputConnection;
 
-import com.onegravity.rteditor.Logma;
 import com.onegravity.rteditor.RTEditText;
 import com.onegravity.rteditor.api.RTMediaFactory;
 import com.onegravity.rteditor.api.media.RTAudio;
@@ -27,7 +26,6 @@ import com.onegravity.rteditor.api.media.RTImage;
 import com.onegravity.rteditor.api.media.RTVideo;
 import com.onegravity.rteditor.converter.ConverterSpannedToHtml;
 import com.onegravity.rteditor.converter.ParagraphType;
-import com.onegravity.rteditor.converter.RemoveFormatting;
 import com.onegravity.rteditor.effects.Effects;
 
 /**
@@ -39,7 +37,7 @@ import com.onegravity.rteditor.effects.Effects;
  *
  * @see RTSpanned
  */
-public final class RTEditable extends RTSpanned implements RemoveFormatting {
+public final class RTEditable extends RTSpanned {
 
     private RTEditText mEditor;
 
@@ -50,16 +48,13 @@ public final class RTEditable extends RTSpanned implements RemoveFormatting {
 
     @Override
     public RTText convertTo(RTFormat destFormat, RTMediaFactory<RTImage, RTAudio, RTVideo> mediaFactory) {
-        Logma.debugger("converto");
         if (destFormat instanceof RTFormat.Html) {
             clean();
             ConverterSpannedToHtml converter = new ConverterSpannedToHtml();
-            converter.setCallback(this);
             return converter.convert(mEditor.getText(), (RTFormat.Html) destFormat);
         } else if (destFormat instanceof RTFormat.PlainText) {
             clean();
             ConverterSpannedToHtml converter = new ConverterSpannedToHtml();
-            converter.setCallback(this);
             RTHtml<RTImage, RTAudio, RTVideo> rtHtml = converter.convert(mEditor.getText(), RTFormat.HTML);
             RTText rtText = rtHtml.convertTo(RTFormat.PLAIN_TEXT, mediaFactory);
             return new RTPlainText(rtText.getText());
@@ -79,10 +74,5 @@ public final class RTEditable extends RTSpanned implements RemoveFormatting {
           - Note: the sequence is important
         */
         Effects.cleanupParagraphs(mEditor);
-    }
-
-    @Override
-    public void remove(ParagraphType paragraphType) {
-       clean();
     }
 }

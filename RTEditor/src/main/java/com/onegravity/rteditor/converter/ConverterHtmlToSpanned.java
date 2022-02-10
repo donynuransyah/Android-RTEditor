@@ -24,7 +24,6 @@ import android.text.TextUtils;
 import android.text.style.QuoteSpan;
 import android.text.style.RelativeSizeSpan;
 
-import com.onegravity.rteditor.Logma;
 import com.onegravity.rteditor.api.RTMediaFactory;
 import com.onegravity.rteditor.api.format.RTFormat;
 import com.onegravity.rteditor.api.format.RTHtml;
@@ -189,13 +188,11 @@ public class ConverterHtmlToSpanned implements ContentHandler {
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        Logma.debugger(localName+" start html to spand");
         handleStartTag(localName, attributes);
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        Logma.debugger(localName+" end html to spand");
         handleEndTag(localName);
     }
 

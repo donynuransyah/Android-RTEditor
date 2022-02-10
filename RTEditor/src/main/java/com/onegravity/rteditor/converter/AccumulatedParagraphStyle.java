@@ -18,7 +18,6 @@ package com.onegravity.rteditor.converter;
 
 import android.util.Log;
 
-import com.onegravity.rteditor.Logma;
 
 /*
  * This is a helper class for converting from Spanned to HTML and back.
