@@ -16,6 +16,8 @@
 
 package com.onegravity.rteditor.converter;
 
+import android.util.Log;
+
 import com.onegravity.rteditor.Logma;
 
 /*
