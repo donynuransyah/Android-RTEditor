@@ -322,7 +322,7 @@ public class RTEditText extends androidx.appcompat.widget.AppCompatEditText impl
      */
     public void setText(RTText rtText) {
         assertRegistration();
-
+        Logma.debugger("settext"+rtText.getText());
         if (rtText.getFormat() instanceof RTFormat.Html) {
             if (mUseRTFormatting) {
                 RTText rtSpanned = rtText.convertTo(RTFormat.SPANNED, mMediaFactory);

@@ -19,6 +19,8 @@ package com.onegravity.rteditor.demo;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -113,9 +115,25 @@ public class RTEditorActivity extends RTEditorBaseActivity {
         if (message != null) {
             mRTMessageField.setRichTextEditing(true, message);
         }
+        mRTMessageField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mRTSignatureField.setText(mRTMessageField.getText(RTFormat.HTML));
+            }
+        });
         // register signature editor
         mRTSignatureField = findViewById(R.id.rtEditText_2);
+        mRTSignatureField.setEnabled(false);
         mRTManager.registerEditor(mRTSignatureField, true);
         if (signature != null) {
             mRTSignatureField.setRichTextEditing(true, signature);

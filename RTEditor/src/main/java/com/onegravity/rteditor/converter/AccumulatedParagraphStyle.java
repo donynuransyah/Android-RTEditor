@@ -16,6 +16,8 @@
 
 package com.onegravity.rteditor.converter;
 
+import com.onegravity.rteditor.Logma;
+
 /*
  * This is a helper class for converting from Spanned to HTML and back.
  * It's the accumulated paragraph styles (all SingleParagraphStyle of a paragraph together)
@@ -36,11 +38,11 @@ public class AccumulatedParagraphStyle {
     }
 
     public int getAbsoluteIndent() {
-        return mAbsoluteIndent;
+        return 1;
     }
 
     public int getRelativeIndent() {
-        return mRelativeIndent;
+        return 1;
     }
 
     public void setAbsoluteIndent(int absoluteIndent) {

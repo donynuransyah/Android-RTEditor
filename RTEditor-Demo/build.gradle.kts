@@ -51,12 +51,12 @@ android {
     }
 
     signingConfigs {
-        create("release") {
-            storeFile = file(project.property("ONEGRAVITY_KEYSTORE_FILE").toString())
-            storePassword = project.property("ONEGRAVITY_KEYSTORE_PASSWORD").toString()
-            keyAlias = project.property("ONEGRAVITY_OPENSOURCE_KEY_ALIAS").toString()
-            keyPassword = project.property("ONEGRAVITY_OPENSOURCE_KEY_PASSWORD").toString()
-        }
+//        create("release") {
+//            storeFile = file(project.property("ONEGRAVITY_KEYSTORE_FILE").toString())
+//            storePassword = project.property("ONEGRAVITY_KEYSTORE_PASSWORD").toString()
+//            keyAlias = project.property("ONEGRAVITY_OPENSOURCE_KEY_ALIAS").toString()
+//            keyPassword = project.property("ONEGRAVITY_OPENSOURCE_KEY_PASSWORD").toString()
+//        }
     }
 
     buildTypes {
@@ -71,7 +71,7 @@ android {
             isDebuggable = false
             isMinifyEnabled = true
             isShrinkResources = true
-            signingConfig = signingConfigs.getByName(name)
+//            signingConfig = signingConfigs.getByName(name)
         }
     }
 }
@@ -84,8 +84,8 @@ dependencies {
     implementation("org.greenrobot:eventbus:_")
 }
 
-play {
-    val apiKeyFile = project.property("googlePlayApiKey").toString()
-    serviceAccountCredentials.set(file(apiKeyFile))
-    track.set("internal")
-}
+//play {
+//    val apiKeyFile = project.property("googlePlayApiKey").toString()
+//    serviceAccountCredentials.set(file(apiKeyFile))
+//    track.set("internal")
+//}
